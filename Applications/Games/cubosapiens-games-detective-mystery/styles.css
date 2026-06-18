@@ -265,6 +265,50 @@ h1.game-title {
   text-align: center;
 }
 
+/* ─── TABS NAVIGATION ────────────────────────────────────────── */
+.tabs-nav {
+  display: flex;
+  gap: 8px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 8px;
+  overflow-x: auto;
+}
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 1;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: var(--font-base);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+  text-align: center;
+}
+.tab-btn:hover {
+  background: var(--glass-hover);
+  color: var(--text);
+}
+.tab-btn.active {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.tab-content-wrap {
+  min-height: 400px;
+}
+
 /* ─── PHASE: STUDY CRIME SCENE ───────────────────────────────── */
 .phase-section { display: none; }
 .phase-section.active { display: block; }
@@ -826,6 +870,95 @@ h1.game-title {
   color: var(--crimson);
   border: 1px solid rgba(255, 34, 68, 0.3);
   box-shadow: 0 0 12px var(--crimson-glow);
+}
+
+/* ─── LOBBY UI ─────────────────────────────────────────────────── */
+.lobby-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.lobby-case-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.lobby-case-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.lobby-case-card:hover {
+  border-color: rgba(0, 229, 255, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 20px var(--cyan-glow);
+}
+.lobby-case-card:hover::before {
+  background: rgba(0, 229, 255, 0.05);
+  opacity: 1;
+}
+.lobby-case-id {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--amber);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.lobby-case-title {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.lobby-case-loc {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.lobby-case-diff {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  color: var(--cyan);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.btn-start-case {
+  margin-top: 8px;
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 12px;
+  color: var(--cyan);
+  font-family: var(--font-base);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lobby-case-card:hover .btn-start-case {
+  background: var(--cyan);
+  color: #000;
+  box-shadow: 0 4px 16px var(--cyan-glow);
 }
 
 /* ─── HOW TO PLAY ─────────────────────────────────────────────── */
