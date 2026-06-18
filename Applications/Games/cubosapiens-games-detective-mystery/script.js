@@ -2,311 +2,274 @@
 
 // ─── CASE DATABASE ────────────────────────────────────────────────────────────
 const CASES = [
+  // EASY CASES (Rookie)
   {
     id: 'C001',
-    title: 'The Midnight Heist',
-    location: 'The Grand Museum',
-    scene: `At 2:14 AM, the Starlight Diamond — valued at £4.2 million — vanished from its display case on the third floor of the Grand Museum. The alarm was disabled for exactly 7 minutes. Security footage shows a shadow near the east wing. A half-eaten chocolate bar was found at the scene. The janitor reports hearing heels on the marble floor at 2:10 AM.`,
+    title: 'The Missing Prototype',
+    location: 'Nexus Tech Headquarters',
+    scene: `At 6:00 PM on Friday, the NX-7 AI chip prototype disappeared from Lab 3B. The lab requires biometric access. CCTV footage shows a figure entering at 5:47 PM. The prototype's tracking chip was found disabled in a bathroom bin. An anonymous email was sent to a competitor shortly after the theft.`,
     evidence: [
-      { icon: '💎', text: 'Alarm disabled 2:07–2:14 AM' },
-      { icon: '👠', text: 'High-heel impressions in dust near case' },
-      { icon: '🍫', text: 'Half-eaten luxury chocolate bar (Valrhona)' },
-      { icon: '🔑', text: 'Security keycard last used: staff entrance' },
-      { icon: '📱', text: 'Phone signal traced to east wing at 2:09 AM' },
-      { icon: '🧤', text: 'Single black glove, size small, found nearby' },
+      { icon: '💻', text: 'Tracking chip disabled' },
+      { icon: '🧥', text: 'White lab coat (Size M) found in bin' },
+      { icon: '📡', text: 'Biometric log: access at 5:47 PM' },
+      { icon: '📧', text: 'Anonymous email sent to competitor firm at 5:50 PM' },
+      { icon: '🅿️', text: 'Parking lot CCTV: silver Prius left at 6:02 PM' },
     ],
     suspects: [
-      {
-        name: 'Vivienne Thorn',
-        role: 'Museum Curator',
-        avatar: '👩‍💼',
-        traits: ['Access codes', 'Works late', 'Knows security'],
-        alibi: 'Claims she was home asleep',
-      },
-      {
-        name: 'Marcus Veil',
-        role: 'Night Security Guard',
-        avatar: '💂',
-        traits: ['On duty', 'Near east wing', 'Keycard access'],
-        alibi: 'Says he was doing perimeter rounds',
-      },
-      {
-        name: 'Isolde Crane',
-        role: 'Visiting Art Appraiser',
-        avatar: '🧑‍🎨',
-        traits: ['Knew diamond value', 'Staying nearby', 'Wears heels'],
-        alibi: 'Claims to have been at the hotel bar',
-      },
-      {
-        name: 'Dorian Ash',
-        role: 'Maintenance Tech',
-        avatar: '🔧',
-        traits: ['Alarm expertise', 'Late shift', 'Small hands'],
-        alibi: 'Says he was fixing boiler in basement',
-      },
+      { name: 'Dr. Yuna Park', role: 'Lead Engineer', avatar: '👩‍🔬', traits: ['Biometric access', 'Size S lab coat', 'Drives a Honda'], alibi: 'Dentist appointment at 5:30 PM' },
+      { name: 'Felix Krohn', role: 'Product Manager', avatar: '👨‍💼', traits: ['Rival company contact', 'Biometric access', 'Drives a Prius', 'Size M lab coat'], alibi: 'Claims he was in a board meeting' },
+      { name: 'Sana Mirza', role: 'Security Analyst', avatar: '👩‍💻', traits: ['No biometric access', 'Size S lab coat', 'Takes the bus'], alibi: 'Server room monitoring' },
+      { name: 'Tomás Reyes', role: 'Hardware Tech', avatar: '🔧', traits: ['No biometric access', 'Size L lab coat', 'Drives a Ford'], alibi: 'Cafeteria with colleagues' },
+    ],
+    culpritIndex: 1,
+    clues: [
+      { question: 'Which piece of evidence directly connects to Felix Krohn\'s vehicle?', options: ['The disabled tracking chip', 'The silver Prius leaving at 6:02 PM', 'The biometric log', 'The white lab coat'], correct: 1, feedback: 'Felix Krohn\'s traits list that he "Drives a Prius", perfectly matching the CCTV footage of the getaway car.' },
+      { question: 'The anonymous email sent to a competitor firm at 5:50 PM aligns best with which suspect\'s traits?', options: ['Dr. Yuna Park', 'Felix Krohn', 'Sana Mirza', 'Tomás Reyes'], correct: 1, feedback: 'Felix Krohn is the only suspect noted to have a "Rival company contact", establishing clear motive for the email.' },
+      { question: 'The thief left behind a Size M white lab coat. Which suspect fits this physical profile?', options: ['Dr. Yuna Park', 'Felix Krohn', 'Sana Mirza', 'Tomás Reyes'], correct: 1, feedback: 'Felix Krohn is explicitly listed as wearing a "Size M lab coat", whereas the others wear Size S or L.' },
+      { question: 'The lab was breached at 5:47 PM. Which suspects have the required Biometric access?', options: ['Sana Mirza and Tomás Reyes', 'Felix Krohn and Dr. Yuna Park', 'Only Dr. Yuna Park', 'Only Felix Krohn'], correct: 1, feedback: 'Only Dr. Yuna Park and Felix Krohn have biometric access listed in their traits.' },
+      { question: 'Given Dr. Yuna Park\'s alibi at the dentist, who is the only remaining suspect with the means, motive, and opportunity?', options: ['Sana Mirza', 'Tomás Reyes', 'Felix Krohn', 'The security guard'], correct: 2, feedback: 'With Yuna at the dentist, Felix is the only one with biometric access, the right coat size, the matching getaway car, and the rival contact.' },
+    ],
+    verdict: 'Felix Krohn stole the prototype. His biometric access got him into the lab, his Size M lab coat was left at the scene, he emailed his rival company contact, and he fled in his silver Prius at 6:02 PM.',
+    difficulty: 'easy',
+  },
+  {
+    id: 'C002',
+    title: 'The Sabotaged Servers',
+    location: 'CloudNet Data Center',
+    scene: `At exactly midnight, CloudNet's primary server racks overheated, causing a localized outage. Investigation showed the cooling system was manually overridden. A small puddle of spilled coffee was found near the override terminal. The terminal requires a physical admin key to unlock. A broken pair of reading glasses was found on the floor.`,
+    evidence: [
+      { icon: '❄️', text: 'Cooling system manually overridden at 12:00 AM' },
+      { icon: '☕', text: 'Spilled coffee near the terminal' },
+      { icon: '🔑', text: 'Admin key used to unlock terminal' },
+      { icon: '👓', text: 'Broken reading glasses found on floor' },
+      { icon: '🚪', text: 'Door logs show entry at 11:55 PM' },
+    ],
+    suspects: [
+      { name: 'Alice Trent', role: 'Sysadmin', avatar: '👩‍💻', traits: ['Has admin key', 'Doesn\'t wear glasses', 'Drinks energy drinks'], alibi: 'Working from home' },
+      { name: 'Bob Vance', role: 'Facility Manager', avatar: '👨‍🔧', traits: ['Has admin key', 'Wears reading glasses', 'Drinks coffee'], alibi: 'Claims he was in his office' },
+      { name: 'Charlie Dean', role: 'Intern', avatar: '🧑‍🎓', traits: ['No admin key', 'Wears contacts', 'Drinks coffee'], alibi: 'Left at 5:00 PM' },
+      { name: 'Diana Prince', role: 'Security', avatar: '👩‍✈️', traits: ['No admin key', 'Wears reading glasses', 'Drinks tea'], alibi: 'On patrol' },
+    ],
+    culpritIndex: 1,
+    clues: [
+      { question: 'Which suspect matches both the coffee spill and the reading glasses found at the scene?', options: ['Alice Trent', 'Bob Vance', 'Charlie Dean', 'Diana Prince'], correct: 1, feedback: 'Bob Vance is the only suspect who both drinks coffee and wears reading glasses.' },
+      { question: 'The override terminal required a physical admin key. Who possesses one?', options: ['Charlie and Diana', 'Alice and Charlie', 'Alice and Bob', 'Only Alice'], correct: 2, feedback: 'Alice Trent and Bob Vance are the only ones with admin keys.' },
+      { question: 'Which evidence rules out Diana Prince, despite her wearing reading glasses?', options: ['She doesn\'t drink coffee', 'She doesn\'t have an admin key', 'Both A and B', 'She was on patrol'], correct: 2, feedback: 'Diana Prince neither drinks coffee nor has an admin key.' },
+      { question: 'Why is Charlie Dean an unlikely suspect?', options: ['He doesn\'t wear glasses', 'He doesn\'t have an admin key', 'Both A and B', 'He drinks tea'], correct: 2, feedback: 'Charlie Dean lacks both the reading glasses and the admin key required.' },
+      { question: 'Based on the evidence and traits, who is the only suspect with the means and physical profile?', options: ['Alice Trent', 'Bob Vance', 'Charlie Dean', 'Diana Prince'], correct: 1, feedback: 'Bob Vance has the admin key, wears reading glasses, and drinks coffee, matching all evidence.' },
+    ],
+    verdict: 'Bob Vance sabotaged the servers. He used his admin key to access the terminal, spilling his coffee and breaking his reading glasses in the process.',
+    difficulty: 'easy',
+  },
+  {
+    id: 'C003',
+    title: 'The Stolen Script',
+    location: 'Hollywood Studio 4',
+    scene: `The only copy of a highly anticipated movie script was stolen from the director's locked office. The theft occurred between 1:00 PM and 2:00 PM while the director was at lunch. A lingering scent of heavy floral perfume was noted in the room. A single blonde hair was found on the desk. The lock was picked, leaving scratch marks.`,
+    evidence: [
+      { icon: '🕒', text: 'Theft occurred between 1:00 PM and 2:00 PM' },
+      { icon: '🌸', text: 'Heavy floral perfume scent in office' },
+      { icon: '👱‍♀️', text: 'Single blonde hair on desk' },
+      { icon: '🔓', text: 'Lock picked with tools' },
+      { icon: '📷', text: 'CCTV offline during that hour' },
+    ],
+    suspects: [
+      { name: 'Eve Malone', role: 'Lead Actress', avatar: '👱‍♀️', traits: ['Blonde hair', 'Wears floral perfume', 'No lockpicking skills'], alibi: 'In makeup trailer' },
+      { name: 'Sam Ryder', role: 'Stunt Coordinator', avatar: '👨', traits: ['Brown hair', 'No perfume', 'Lockpicking hobbyist'], alibi: 'At the gym' },
+      { name: 'Chloe Vance', role: 'Assistant Director', avatar: '👱‍♀️', traits: ['Blonde hair', 'Wears floral perfume', 'Former locksmith'], alibi: 'Claims she was eating lunch alone' },
+      { name: 'Max Thorne', role: 'Rival Producer', avatar: '👨‍💼', traits: ['Bald', 'Wears cologne', 'Hires professionals'], alibi: 'Off-set meeting' },
     ],
     culpritIndex: 2,
     clues: [
-      {
-        question: 'The security keycard used at 2:07 AM belonged to which role?',
-        options: ['Night Security Guard', 'Museum Curator', 'Visiting Appraiser', 'Maintenance Tech'],
-        correct: 1,
-        feedback: 'The keycard was cloned from the Curator\'s master card — only Vivienne had access to the original, but she lent it to Isolde for "after-hours research access" two days prior.',
-      },
-      {
-        question: 'What does the Valrhona chocolate bar most likely tell us?',
-        options: [
-          'It was planted as a distraction',
-          'The thief has refined, expensive tastes',
-          'The janitor dropped it during rounds',
-          'It was stolen from the gift shop',
-        ],
-        correct: 1,
-        feedback: 'Valrhona is a high-end French chocolatier. Isolde Crane\'s hotel receipt shows a box of Valrhona Grands Crus purchased the afternoon before the theft.',
-      },
-      {
-        question: 'The phone signal in the east wing at 2:09 AM — whose number does it belong to?',
-        options: ['Marcus Veil', 'Dorian Ash', 'Isolde Crane', 'Vivienne Thorn'],
-        correct: 2,
-        feedback: 'Carrier records confirm the signal came from a prepaid SIM — but the device model (an iPhone 15 Pro) matches the one Isolde registered at the hotel check-in.',
-      },
-      {
-        question: 'The heel impressions in dust suggest what?',
-        options: [
-          'The thief was over six feet tall',
-          'The thief wore formal footwear — likely women\'s heels',
-          'The janitor was careless with his mop',
-          'The museum had recently replaced the floor',
-        ],
-        correct: 1,
-        feedback: 'Forensics measured the stride and heel depth. The impressions match a women\'s size 7 stiletto — consistent with the shoes Isolde wore at the hotel that evening.',
-      },
-      {
-        question: 'Why was Marcus Veil\'s alibi suspicious?',
-        options: [
-          'He was seen on CCTV leaving the building',
-          'His perimeter log showed no east wing entry — but his swipe card was used there',
-          'He owns a chocolate shop',
-          'He had previously worked with Vivienne',
-        ],
-        correct: 1,
-        feedback: 'Marcus\'s patrol log skips the east wing entirely during 2:00–2:20 AM, yet the keycard reader shows a badge scan. Someone used a cloned badge — eliminating Marcus as a direct suspect.',
-      },
+      { question: 'Which suspect has the skills required to bypass the locked office door?', options: ['Eve Malone', 'Sam Ryder', 'Chloe Vance', 'Both Sam and Chloe'], correct: 3, feedback: 'Sam is a lockpicking hobbyist and Chloe is a former locksmith, giving both the means.' },
+      { question: 'Which physical evidence rules out Sam Ryder and Max Thorne?', options: ['The floral perfume and blonde hair', 'The picked lock', 'The time of the theft', 'The offline CCTV'], correct: 0, feedback: 'The blonde hair and floral perfume strongly point away from Sam and Max.' },
+      { question: 'Between the two blonde suspects, who has the necessary skill to pick the lock?', options: ['Eve Malone', 'Chloe Vance', 'Both', 'Neither'], correct: 1, feedback: 'Chloe Vance is a former locksmith, whereas Eve Malone has no lockpicking skills.' },
+      { question: 'Which suspect perfectly matches the hair color, scent, and skills required?', options: ['Eve Malone', 'Sam Ryder', 'Chloe Vance', 'Max Thorne'], correct: 2, feedback: 'Chloe Vance is blonde, wears floral perfume, and has lockpicking skills.' },
+      { question: 'Why is Eve Malone an unlikely suspect despite matching the physical profile?', options: ['She was at lunch', 'She doesn\'t know how to pick a lock', 'She has brown hair', 'She wears cologne'], correct: 1, feedback: 'Eve lacks the lockpicking skills necessary to enter the office.' },
     ],
-    verdict: 'Isolde Crane orchestrated the theft after weeks of planning. She cloned the Curator\'s keycard, disabled the alarm remotely using schematics obtained during her "appraisal visit," and made her escape through the staff entrance wearing gloves. The diamond was later recovered in a false-bottomed luggage at Heathrow Airport.',
+    verdict: 'Chloe Vance stole the script. As a former locksmith, she easily picked the office lock. Her blonde hair and floral perfume left clear traces of her presence.',
+    difficulty: 'easy',
+  },
+
+  // MEDIUM CASES (Detective)
+  {
+    id: 'C004',
+    title: 'The Midnight Heist',
+    location: 'The Grand Museum',
+    scene: `At 2:14 AM, the Starlight Diamond — valued at £4.2 million — vanished from its display case on the third floor of the Grand Museum. The alarm was disabled for exactly 7 minutes. Security footage shows a shadow near the east wing. A half-eaten luxury chocolate wrapper was found at the scene. The janitor reports hearing heels on the marble floor at 2:10 AM.`,
+    evidence: [
+      { icon: '💎', text: 'Alarm disabled 2:07–2:14 AM' },
+      { icon: '👠', text: 'High-heel impressions in dust near case' },
+      { icon: '🍫', text: 'Half-eaten luxury chocolate wrapper (Valrhona)' },
+      { icon: '🔑', text: 'Security keycard swiped at staff entrance' },
+      { icon: '📱', text: 'Phone signal traced to east wing at 2:09 AM' },
+    ],
+    suspects: [
+      { name: 'Vivienne Thorn', role: 'Museum Curator', avatar: '👩‍💼', traits: ['Has master keycard', 'Knows access codes', 'Wears flats'], alibi: 'Claims she was home asleep' },
+      { name: 'Marcus Veil', role: 'Night Security Guard', avatar: '💂', traits: ['Has basic keycard', 'No alarm knowledge', 'Near east wing'], alibi: 'Says he was doing perimeter rounds' },
+      { name: 'Isolde Crane', role: 'Visiting Art Appraiser', avatar: '🧑‍🎨', traits: ['Knew diamond value', 'Wears heels', 'Has luxury tastes', 'Borrowed Curator keycard'], alibi: 'Claims to have been at the hotel bar' },
+      { name: 'Dorian Ash', role: 'Maintenance Tech', avatar: '🔧', traits: ['Alarm expertise', 'Late shift', 'Wears work boots'], alibi: 'Says he was fixing boiler in basement' },
+    ],
+    culpritIndex: 2,
+    clues: [
+      { question: 'Which suspect\'s physical trait matches the footprint evidence found near the display case?', options: ['Vivienne Thorn', 'Marcus Veil', 'Isolde Crane', 'Dorian Ash'], correct: 2, feedback: 'The high-heel impressions exactly match Isolde Crane\'s known footwear trait, ruling out Vivienne (flats) and Dorian (boots).' },
+      { question: 'Which piece of evidence aligns perfectly with Isolde Crane\'s profile?', options: ['The disabled alarm', 'The luxury chocolate wrapper', 'The phone signal', 'The swiped keycard'], correct: 1, feedback: 'As an art appraiser with noted "luxury tastes", the high-end Valrhona chocolate wrapper fits her profile perfectly.' },
+      { question: 'How did the thief likely bypass the locked staff entrance?', options: ['The guard let them in', 'They picked the lock', 'They used the Curator\'s borrowed keycard', 'They broke a window'], correct: 2, feedback: 'Isolde\'s traits state she "Borrowed Curator keycard", giving her the perfect means to enter through the staff doors.' },
+      { question: 'Why is Dorian Ash unlikely to be the primary thief, despite his alarm expertise?', options: ['He doesn\'t know the diamond\'s value', 'His alibi is ironclad', 'He wears work boots, not heels', 'He was seen on CCTV'], correct: 2, feedback: 'The clear high-heel impressions at the scene rule out the maintenance tech, meaning someone else bypassed the alarm.' },
+      { question: 'Given the evidence, what is the most logical conclusion about how the alarm was disabled?', options: ['Marcus Veil turned it off', 'Isolde used the borrowed master keycard which had alarm privileges', 'Dorian Ash did it for her', 'The alarm malfunctioned'], correct: 1, feedback: 'The Curator\'s master keycard would grant the necessary access codes, allowing Isolde to both enter the building and disable the alarm system.' },
+    ],
+    verdict: 'Isolde Crane orchestrated the theft. She used her knowledge of the diamond\'s value as motive, the borrowed Curator\'s master keycard to enter the staff entrance and bypass the alarm, and her luxury tastes and heels directly placed her at the crime scene.',
+    difficulty: 'medium',
+  },
+  {
+    id: 'C005',
+    title: 'The Poisoned Pen',
+    location: 'Blackwood Manor Library',
+    scene: `Lord Edmund Blackwood, 74, was found unresponsive at his writing desk in the library at 9:45 PM. His evening tea sat half-drunk beside a manuscript he was editing. The doctor confirmed a fast-acting sedative in the tea. The window latch was found bent outward. The library door was locked from the outside.`,
+    evidence: [
+      { icon: '☕', text: 'Sedative compound in tea' },
+      { icon: '🪟', text: 'Bent window latch, bent OUTWARD from the inside' },
+      { icon: '📝', text: 'Manuscript: a new will, pages 3-4 missing' },
+      { icon: '🧴', text: 'Trace of lavender hand lotion on teacup rim' },
+      { icon: '🔐', text: 'Library locked from outside — Lord\'s key missing' },
+    ],
+    suspects: [
+      { name: 'Reginald Blackwood', role: 'Estranged Nephew', avatar: '🧔', traits: ['Stood to inherit', 'Financial trouble', 'No keys'], alibi: 'Says he was in the drawing room all evening' },
+      { name: 'Mrs. Pryce', role: 'Head Housekeeper', avatar: '👩‍🦳', traits: ['Prepared the tea', 'Wears lavender lotion', 'Has master keys'], alibi: 'Claims she served the tea and went to bed at 9 PM' },
+      { name: 'Dr. Calloway', role: 'Family Physician', avatar: '👨‍⚕️', traits: ['Medical knowledge', 'Access to sedatives', 'No keys'], alibi: 'Left the manor by 4 PM per his log' },
+      { name: 'Elspeth Crane', role: 'Literary Secretary', avatar: '👩‍💻', traits: ['Uses lavender lotion', 'Remote access', 'No keys'], alibi: 'Was working from home' },
+    ],
+    culpritIndex: 1,
+    clues: [
+      { question: 'Who had the most direct opportunity to place the sedative in the tea before Lord Blackwood drank it?', options: ['Reginald Blackwood', 'Dr. Calloway', 'Mrs. Pryce', 'Elspeth Crane'], correct: 2, feedback: 'Mrs. Pryce\'s traits confirm she prepared and served the tea, giving her direct access to poison it.' },
+      { question: 'The lavender lotion on the teacup rim narrows the prime suspects down to:', options: ['Reginald and Dr. Calloway', 'Mrs. Pryce and Elspeth Crane', 'Dr. Calloway and Mrs. Pryce', 'Elspeth Crane and Reginald'], correct: 1, feedback: 'Both Mrs. Pryce and Elspeth Crane are noted to use lavender lotion, placing one of them as the tea handler.' },
+      { question: 'The window latch was bent OUTWARD from the inside. What does this indicate?', options: ['The killer escaped through the window', 'The killer staged a break-in from inside the room', 'The wind blew it open', 'Lord Blackwood tried to get air'], correct: 1, feedback: 'Bending it outward from the inside is a deliberate attempt to stage a forced entry, covering the killer\'s tracks.' },
+      { question: 'The library was locked from the OUTSIDE. Based on suspect traits, who had the means to lock it and leave?', options: ['Reginald Blackwood', 'Dr. Calloway', 'Mrs. Pryce', 'Elspeth Crane'], correct: 2, feedback: 'Mrs. Pryce is the only suspect with "master keys", allowing her to lock the door from the outside after staging the scene.' },
+      { question: 'Why were pages 3-4 of the new will missing?', options: ['They were accidentally spilled on', 'The killer wanted to hide who was being written out of the inheritance', 'Lord Blackwood hadn\'t written them yet', 'Elspeth stole them to sell'], correct: 1, feedback: 'The missing pages likely removed Mrs. Pryce from the inheritance, providing her clear motive to stop the new will from being signed.' },
+    ],
+    verdict: 'Mrs. Pryce poisoned the Lord\'s evening tea. She prepared the tea (leaving lavender lotion on the rim), staged the window to look like a break-in, stole the will pages that wrote her out of the inheritance, and locked the door from the outside using her master keys.',
+    difficulty: 'medium',
+  },
+  {
+    id: 'C006',
+    title: 'The Gallery Ghost',
+    location: 'Modern Art Gallery',
+    scene: `A valuable modern sculpture was smashed into pieces overnight. The gallery alarm did not trigger. A distinct smell of cigar smoke lingered in the room. The shattered pieces were swept into a neat pile. The gallery log shows only one authorized entry at 1:00 AM. A receipt from an all-night diner was found on the floor.`,
+    evidence: [
+      { icon: '🔔', text: 'Alarm bypassed with authorized code' },
+      { icon: '💨', text: 'Lingering smell of cigar smoke' },
+      { icon: '🧹', text: 'Shattered pieces swept into a neat pile' },
+      { icon: '🧾', text: 'Diner receipt timestamped 12:30 AM' },
+      { icon: '📖', text: 'Log shows entry at 1:00 AM' },
+    ],
+    suspects: [
+      { name: 'Julian Vance', role: 'Gallery Owner', avatar: '👨‍💼', traits: ['Knows alarm code', 'Smokes cigars', 'Messy habits'], alibi: 'At a charity gala until 2 AM' },
+      { name: 'Helena Troy', role: 'Rival Artist', avatar: '👩‍🎨', traits: ['No alarm code', 'Smokes cigarettes', 'Neat freak'], alibi: 'Working in her studio' },
+      { name: 'Arthur Penhaligon', role: 'Night Janitor', avatar: '👨‍🔧', traits: ['Knows alarm code', 'Smokes cigars', 'Neat freak'], alibi: 'Claims he was eating at a diner' },
+      { name: 'Diana Locke', role: 'Security Guard', avatar: '👩‍✈️', traits: ['Knows alarm code', 'Doesn\'t smoke', 'Messy habits'], alibi: 'Sleeping in breakroom' },
+    ],
+    culpritIndex: 2,
+    clues: [
+      { question: 'Which suspects have the authorized code to bypass the alarm?', options: ['Julian, Arthur, and Diana', 'Helena and Diana', 'Julian and Helena', 'Only Arthur'], correct: 0, feedback: 'Julian, Arthur, and Diana all know the alarm code.' },
+      { question: 'The smell of cigar smoke narrows the suspects down to:', options: ['Julian and Helena', 'Julian and Arthur', 'Arthur and Diana', 'Helena and Arthur'], correct: 1, feedback: 'Only Julian and Arthur are noted to smoke cigars.' },
+      { question: 'Which suspect matches the neatness of sweeping the pieces into a pile?', options: ['Julian Vance', 'Arthur Penhaligon', 'Diana Locke', 'None of the above'], correct: 1, feedback: 'Arthur is a "neat freak", whereas Julian has "messy habits".' },
+      { question: 'The diner receipt timestamped 12:30 AM directly connects to whose alibi?', options: ['Julian Vance', 'Helena Troy', 'Arthur Penhaligon', 'Diana Locke'], correct: 2, feedback: 'Arthur claims he was eating at a diner; the receipt places him near the gallery right before the 1:00 AM entry.' },
+      { question: 'Based on the traits, who is the only suspect matching the cigar smoke, the neatness, and the alarm code?', options: ['Julian Vance', 'Helena Troy', 'Arthur Penhaligon', 'Diana Locke'], correct: 2, feedback: 'Arthur Penhaligon has the alarm code, smokes cigars, and is a neat freak.' },
+    ],
+    verdict: 'Arthur Penhaligon smashed the sculpture. After eating at the diner, he used his alarm code to enter at 1:00 AM. He smoked a cigar while admiring his handiwork, and his habit as a neat freak compelled him to sweep up the mess.',
     difficulty: 'medium',
   },
 
+  // HARD CASES (Inspector)
   {
-    id: 'C002',
-    title: 'The Poisoned Pen',
-    location: 'Blackwood Manor Library',
-    scene: `Lord Edmund Blackwood, 74, was found unresponsive at his writing desk in the library at 9:45 PM. His evening tea sat half-drunk beside a manuscript he was editing. The doctor confirmed a fast-acting sedative in the tea — enough to induce cardiac arrest in an elderly man. The library had been locked from inside. A window latch was found bent outward.`,
+    id: 'C007',
+    title: 'The Silent Code',
+    location: 'CyberSec HQ',
+    scene: `A top-secret encryption algorithm was stolen from a secure air-gapped terminal. The terminal is isolated in a Faraday cage room. The room logs show entry by three people that day. A small, unauthorized USB drive was found hidden under the desk. The room's temperature log shows a spike at 3:15 PM. A faint smell of mint was noted.`,
     evidence: [
-      { icon: '☕', text: 'Sedative compound in tea — Rohypnol derivative' },
-      { icon: '🪟', text: 'Bent window latch, consistent with forced entry from inside' },
-      { icon: '📝', text: 'Manuscript: a new will, pages 3-4 missing' },
-      { icon: '🧴', text: 'Trace of hand lotion on teacup rim (lavender-scented)' },
-      { icon: '🔐', text: 'Library locked from inside — key still in lock' },
-      { icon: '📞', text: 'Lord Blackwood received a call at 9:00 PM, 8 minutes long' },
+      { icon: '🖥️', text: 'Data transferred to unauthorized USB' },
+      { icon: '🌡️', text: 'Temperature spike at 3:15 PM' },
+      { icon: '🌿', text: 'Faint smell of mint in the room' },
+      { icon: '🔑', text: 'Entry requires Level 5 clearance' },
+      { icon: '📷', text: 'CCTV blinded by IR laser at 3:10 PM' },
     ],
     suspects: [
-      {
-        name: 'Reginald Blackwood',
-        role: 'Estranged Nephew',
-        avatar: '🧔',
-        traits: ['Stood to inherit', 'Financial trouble', 'Arrived unannounced'],
-        alibi: 'Says he was in the drawing room all evening',
-      },
-      {
-        name: 'Mrs. Pryce',
-        role: 'Head Housekeeper',
-        avatar: '👩‍🦳',
-        traits: ['Prepared the tea', 'Wears lavender lotion', 'Library key access'],
-        alibi: 'Claims she served the tea and went to bed at 9 PM',
-      },
-      {
-        name: 'Dr. Calloway',
-        role: 'Family Physician',
-        avatar: '👨‍⚕️',
-        traits: ['Medical knowledge', 'Access to sedatives', 'Visited 3 PM that day'],
-        alibi: 'Left the manor by 4 PM per his log',
-      },
-      {
-        name: 'Elspeth Crane',
-        role: 'Literary Secretary',
-        avatar: '👩‍💻',
-        traits: ['Knew about will changes', 'Uses lavender lotion', 'Remote access'],
-        alibi: 'Was working from home — confirmed by laptop logs',
-      },
+      { name: 'Elias Thorne', role: 'Chief Cryptographer', avatar: '👨‍💻', traits: ['Level 5 clearance', 'Chews mint gum', 'Left early at 2 PM'], alibi: 'At home reading' },
+      { name: 'Dr. Aris Thorne', role: 'Hardware Specialist', avatar: '🧑‍🔬', traits: ['Level 5 clearance', 'Builds IR lasers', 'Drinks mint tea'], alibi: 'Working in adjacent lab' },
+      { name: 'Nadia Rostova', role: 'Security Director', avatar: '👩‍✈️', traits: ['Level 5 clearance', 'Allergic to mint', 'No hardware skills'], alibi: 'In a management meeting' },
+      { name: 'Liam Cross', role: 'Junior Analyst', avatar: '🧑‍🎓', traits: ['Level 3 clearance', 'Chews mint gum', 'Hardware hobbyist'], alibi: 'At his desk' },
     ],
     culpritIndex: 1,
     clues: [
-      {
-        question: 'The lavender lotion trace on the teacup is significant because:',
-        options: [
-          'It proves the tea was served by someone wearing lotion',
-          'Lavender lotion is found in the Lord\'s bathroom',
-          'Both Mrs. Pryce and Elspeth use lavender lotion',
-          'The Lord had allergies to lavender',
-        ],
-        correct: 0,
-        feedback: 'The rim trace indicates someone handled the cup after the tea was poured — specifically while placing the cup down or adding the compound. Only the tea-server\'s hands would leave a rim trace.',
-      },
-      {
-        question: 'Why is the bent window latch a red herring?',
-        options: [
-          'It was bent inward, not outward',
-          'The latch was bent from inside to simulate forced entry — the door was never unlocked',
-          'Windows don\'t have latches at Blackwood Manor',
-          'The window was nailed shut for winter',
-        ],
-        correct: 1,
-        feedback: 'The forensics team noted the latch metal bent outward in a way only reachable from inside the room. This was staged to suggest an intruder — but the real killer had a key and locked the door after.',
-      },
-      {
-        question: 'The missing pages 3-4 of the manuscript (new will) likely contained:',
-        options: [
-          'Edits to a chapter about his youth',
-          'The beneficiary list — naming who would inherit',
-          'A dedication to the housekeeper',
-          'Old debts Lord Blackwood wanted forgiven',
-        ],
-        correct: 1,
-        feedback: 'Lord Blackwood had mentioned to his solicitor that he was revising his estate distribution. Pages 3-4 in a will-format manuscript would be the primary beneficiary declarations — whoever removed them did not want to be found named or removed from inheritance.',
-      },
-      {
-        question: 'Dr. Calloway\'s visit at 3 PM is notable because:',
-        options: [
-          'He prescribed a sedative that day',
-          'The library\'s CCTV showed him near the kitchen after he supposedly left',
-          'He and the Lord had an argument witnessed by staff',
-          'He brought the manuscript from a publisher',
-        ],
-        correct: 1,
-        feedback: 'A kitchen camera timestamped 4:22 PM captured a silhouette consistent with Dr. Calloway. However, his medical bag was checked — no sedatives unaccounted for. He likely did not administer the compound.',
-      },
-      {
-        question: 'What does the 9:00 PM phone call most likely tell us?',
-        options: [
-          'Lord Blackwood was arguing with a business partner',
-          'Elspeth called to discuss the will changes she discovered',
-          'Reginald called asking for money',
-          'Dr. Calloway called to check on his patient',
-        ],
-        correct: 1,
-        feedback: 'Phone records show the 8-minute call came from Elspeth\'s number. But analysis of her laptop logs shows she was logged in but idle — she may have made the call to distract or learn what he was changing in the will, then relayed information to an accomplice.',
-      },
+      { question: 'Which suspect lacks the necessary clearance to enter the room?', options: ['Elias Thorne', 'Dr. Aris Thorne', 'Nadia Rostova', 'Liam Cross'], correct: 3, feedback: 'Liam Cross only has Level 3 clearance, making it impossible for him to enter the Level 5 room.' },
+      { question: 'The CCTV was blinded by an IR laser. Which suspect has the skills to build one?', options: ['Elias Thorne', 'Dr. Aris Thorne', 'Nadia Rostova', 'Liam Cross'], correct: 1, feedback: 'Dr. Aris Thorne builds IR lasers, while Nadia explicitly has no hardware skills.' },
+      { question: 'The smell of mint points to which suspects?', options: ['Elias and Aris', 'Elias and Liam', 'Aris and Nadia', 'Only Elias'], correct: 0, feedback: 'Elias chews mint gum and Aris drinks mint tea. Nadia is allergic to mint.' },
+      { question: 'If Elias left at 2 PM, how does that affect the timeline?', options: ['He is the prime suspect', 'He could not have caused the 3:15 PM temperature spike', 'He blinded the camera before leaving', 'It means the log is wrong'], correct: 1, feedback: 'The temperature spike and camera blinding happened after 3 PM. Elias had already left the building.' },
+      { question: 'Given the clearance level, hardware skills, and mint smell, who is the only viable suspect?', options: ['Elias Thorne', 'Dr. Aris Thorne', 'Nadia Rostova', 'Liam Cross'], correct: 1, feedback: 'Dr. Aris Thorne has Level 5 clearance, builds IR lasers to blind the camera, and drinks mint tea.' },
     ],
-    verdict: 'Mrs. Pryce poisoned the Lord\'s evening tea. She had served him for 22 years and was named prominently in his previous will. Upon learning he was rewriting the document, she added a sedative compound — obtained through Dr. Calloway\'s unlocked medical bag during his afternoon visit — to the tea. She then staged a forced-entry scene before locking the library from outside using her master key and removing the incriminating will pages.',
+    verdict: 'Dr. Aris Thorne stole the algorithm. He used his custom IR laser to blind the camera at 3:10 PM, entered with his Level 5 clearance, and transferred the data. His mint tea left a lingering scent.',
     difficulty: 'hard',
   },
-
   {
-    id: 'C003',
-    title: 'The Missing Prototype',
-    location: 'Nexus Tech Headquarters',
-    scene: `At 6:00 PM on Friday, the NX-7 AI chip prototype — worth an estimated $40 million in trade secrets — disappeared from Lab 3B at Nexus Tech. The lab requires biometric access. Only four employees had clearance. CCTV footage shows a figure in a white lab coat entering at 5:47 PM. The prototype's tracking chip was found disabled in a bathroom bin.`,
+    id: 'C008',
+    title: 'The Alchemist\'s Demise',
+    location: 'Antique Apothecary',
+    scene: `An antique dealer was found poisoned by a rare, volatile chemical in his locked shop. The chemical is only stable at freezing temperatures. The shop's AC was set to 80°F. A damp towel was found near the body. The victim's ledger showed a recent dispute over a rare artifact. A set of muddy footprints led from the back door to the counter.`,
     evidence: [
-      { icon: '💻', text: 'Tracking chip disabled — requires engineering tool' },
-      { icon: '🧥', text: 'White lab coat (size M) found in Lab 3B recycling bin' },
-      { icon: '📡', text: 'Biometric log: access at 5:47 PM — reading corrupted' },
-      { icon: '📧', text: 'Anonymous email sent to competitor firm at 5:50 PM' },
-      { icon: '🅿️', text: 'Parking lot CCTV: silver Toyota Prius left at 6:02 PM' },
-      { icon: '☕', text: 'Coffee mug with lip print found on lab bench' },
+      { icon: '☠️', text: 'Poisoning by volatile chemical (requires cold)' },
+      { icon: '🔥', text: 'Shop AC deliberately set to 80°F' },
+      { icon: '💧', text: 'Damp towel near the body' },
+      { icon: '👣', text: 'Muddy footprints (size 10)' },
+      { icon: '📔', text: 'Ledger: Dispute with "Collector X"' },
     ],
     suspects: [
-      {
-        name: 'Dr. Yuna Park',
-        role: 'Lead Engineer',
-        avatar: '👩‍🔬',
-        traits: ['Created prototype', 'Biometric access', 'Knows disable method'],
-        alibi: 'Says she left at 5:30 PM for a dentist appointment',
-      },
-      {
-        name: 'Felix Krohn',
-        role: 'Product Manager',
-        avatar: '👨‍💼',
-        traits: ['Rival company contact', 'Biometric access', 'Drives a Prius'],
-        alibi: 'Claims he was in a board meeting until 7 PM',
-      },
-      {
-        name: 'Sana Mirza',
-        role: 'Security Analyst',
-        avatar: '👩‍💻',
-        traits: ['Can corrupt biometrics', 'Server room access', 'Wore lab coat'],
-        alibi: 'Was monitoring security feeds from server room',
-      },
-      {
-        name: 'Tomás Reyes',
-        role: 'Hardware Technician',
-        avatar: '🔧',
-        traits: ['Has disabling tools', 'Works in Lab 3B', 'Size M lab coat'],
-        alibi: 'Says he was in the cafeteria with colleagues',
-      },
+      { name: 'Silas Vance', role: 'Rival Antiquarian', avatar: '👨‍💼', traits: ['Size 10 shoes', 'Has a greenhouse (mud)', 'No chemistry knowledge'], alibi: 'At an auction' },
+      { name: 'Dr. Elara Lin', role: 'Chemist', avatar: '👩‍🔬', traits: ['Chemistry expertise', 'Size 7 shoes', 'Access to dry ice'], alibi: 'Working in her lab' },
+      { name: 'Victor Thorne', role: 'The "Collector X"', avatar: '🕵️', traits: ['Size 10 shoes', 'Chemistry hobbyist', 'Seen in muddy park'], alibi: 'Walking in the park' },
+      { name: 'Maude Flanders', role: 'Shop Assistant', avatar: '👩', traits: ['Size 8 shoes', 'Controls thermostat', 'No motive'], alibi: 'Went home sick' },
     ],
-    culpritIndex: 1,
+    culpritIndex: 2,
     clues: [
-      {
-        question: 'The corrupted biometric log at 5:47 PM suggests:',
-        options: [
-          'The scanner malfunctioned randomly',
-          'Someone with server access deliberately corrupted their own entry log',
-          'The prototype damaged nearby electronics when moved',
-          'An outside hacker accessed the system',
-        ],
-        correct: 1,
-        feedback: 'Server logs show a targeted data wipe of only the 5:47 PM biometric record — the corruption is surgical, not systemic. This strongly points to someone with both lab access AND server room privileges.',
-      },
-      {
-        question: 'What does the anonymous email to the competitor at 5:50 PM tell us?',
-        options: [
-          'The thief acted alone and quickly',
-          'The theft was pre-planned with an external buyer already lined up',
-          'The email was sent automatically by a disgruntled ex-employee',
-          'The competitor firm orchestrated the whole operation',
-        ],
-        correct: 1,
-        feedback: 'The email contained prototype specification metadata — information only accessible inside the building\'s network. The 3-minute gap from entry (5:47) to email (5:50) suggests the sender knew exactly what to grab and had pre-drafted the message.',
-      },
-      {
-        question: 'Dr. Yuna Park\'s alibi — dentist appointment at 5:30 PM — was:',
-        options: [
-          'Confirmed by the dental clinic\'s appointment records',
-          'Unverified — the clinic was closed and her appointment was cancelled that morning',
-          'Confirmed by two colleagues who gave her a ride',
-          'Impossible to verify — records were lost',
-        ],
-        correct: 0,
-        feedback: 'The dental clinic confirmed Yuna arrived at 5:40 PM and was in the chair until 6:25 PM — she could not have physically been in the lab at 5:47. Her alibi is solid, eliminating her.',
-      },
-      {
-        question: 'Felix Krohn\'s board meeting alibi — how was it compromised?',
-        options: [
-          'The board meeting was in a different city',
-          'Meeting room CCTV shows an empty chair at his seat from 5:30–6:10 PM',
-          'No one could confirm he was present',
-          'He accidentally called the lab from his cell phone during the meeting',
-        ],
-        correct: 1,
-        feedback: 'The board meeting room camera clearly shows Krohn absent from 5:28 PM — his chair empty, his laptop closed. He rejoined at 6:14 PM, flushed, claiming a bathroom break. The 46-minute gap is unaccounted for.',
-      },
-      {
-        question: 'The silver Toyota Prius leaving at 6:02 PM — what does it reveal?',
-        options: [
-          'It was a delivery vehicle with no connection to the case',
-          'Felix Krohn owns the only registered silver Prius in the company parking lot',
-          'Sana Mirza borrowed the car that day from a colleague',
-          'The CCTV quality was too poor to identify the vehicle',
-        ],
-        correct: 1,
-        feedback: 'Company parking records show Felix Krohn\'s vehicle (silver Toyota Prius, plate KR04 FLX) was logged out at 6:02 PM. He had previously stated he drove to the office that day but "took the train home." His car was found later that evening two blocks from NexusTech\'s primary competitor.',
-      },
+      { question: 'The volatile chemical required freezing temperatures to transport. Which suspects have the knowledge to handle it safely?', options: ['Silas Vance and Victor Thorne', 'Dr. Elara Lin and Victor Thorne', 'Only Dr. Elara Lin', 'Maude Flanders and Silas Vance'], correct: 1, feedback: 'Dr. Elara Lin has chemistry expertise and Victor Thorne is a chemistry hobbyist. Silas has no chemistry knowledge.' },
+      { question: 'The muddy footprints are size 10. Which suspects match this footprint?', options: ['Silas Vance and Victor Thorne', 'Dr. Elara Lin and Maude Flanders', 'Only Silas Vance', 'Only Victor Thorne'], correct: 0, feedback: 'Both Silas Vance and Victor Thorne wear size 10 shoes.' },
+      { question: 'The ledger mentions a dispute with "Collector X". Which suspect matches this alias?', options: ['Silas Vance', 'Dr. Elara Lin', 'Victor Thorne', 'Maude Flanders'], correct: 2, feedback: 'Victor Thorne is explicitly identified as "Collector X" in his traits, providing a clear motive.' },
+      { question: 'Which suspect\'s alibi perfectly explains the muddy footprints?', options: ['Silas Vance (at an auction)', 'Dr. Elara Lin (in lab)', 'Victor Thorne (walking in muddy park)', 'Maude Flanders (home sick)'], correct: 2, feedback: 'Victor Thorne\'s alibi of walking in a muddy park perfectly explains the mud on his size 10 shoes.' },
+      { question: 'Combining the motive, the chemistry knowledge, and the footprints, who is the killer?', options: ['Silas Vance', 'Dr. Elara Lin', 'Victor Thorne', 'Maude Flanders'], correct: 2, feedback: 'Victor Thorne (Collector X) had the motive, the chemistry hobbyist skills to transport the poison, and left size 10 muddy footprints.' },
     ],
-    verdict: 'Felix Krohn had been secretly negotiating with a rival company for six months. He used his biometric clearance to enter Lab 3B, grabbed the NX-7 prototype, and used Sana Mirza\'s server credentials (stolen via a phishing attack weeks prior) to corrupt his biometric log. He sent a pre-drafted email to his contact at the competitor firm, then drove the prototype directly to a handoff location. His board meeting alibi collapsed entirely under CCTV scrutiny.',
-    difficulty: 'easy',
+    verdict: 'Victor Thorne murdered the dealer over their dispute. Using his chemistry knowledge, he transported the volatile poison using dry ice (explaining the damp towel), turned up the AC to vaporize it, and left his muddy size 10 footprints behind.',
+    difficulty: 'hard',
   },
+  {
+    id: 'C009',
+    title: 'The Locked Cabin',
+    location: 'Snowy Peak Retreat',
+    scene: `A reclusive author was found dead in his remote mountain cabin. The cabin was locked from the inside. A single bullet was fired, but the gun is missing. Outside, undisturbed snow surrounds the cabin. The fireplace ashes are still warm. A secret underground tunnel connects the cabin to a nearby supply shed.`,
+    evidence: [
+      { icon: '🚪', text: 'Cabin locked from the inside' },
+      { icon: '🔫', text: 'Victim shot, weapon missing' },
+      { icon: '❄️', text: 'Undisturbed snow outside cabin doors/windows' },
+      { icon: '🔥', text: 'Warm fireplace ashes' },
+      { icon: '🕳️', text: 'Underground tunnel to supply shed' },
+    ],
+    suspects: [
+      { name: 'Jack Torrance', role: 'Caretaker', avatar: '👨‍🌾', traits: ['Knows about tunnel', 'Owns a gun', 'Wears snowshoes'], alibi: 'Shoveling snow miles away' },
+      { name: 'Emma Frost', role: 'Editor', avatar: '👩‍💼', traits: ['Unaware of tunnel', 'Disliked author', 'Afraid of guns'], alibi: 'At the lodge' },
+      { name: 'Logan Vance', role: 'Local Hunter', avatar: '💂', traits: ['Expert marksman', 'Knows about tunnel', 'Carries a rifle'], alibi: 'Hunting in the woods' },
+      { name: 'Sarah Connor', role: 'Ex-Wife', avatar: '👩', traits: ['Knows about tunnel', 'Owns a handgun', 'Hates the cold'], alibi: 'Staying at the supply shed' },
+    ],
+    culpritIndex: 3,
+    clues: [
+      { question: 'How did the killer escape without leaving footprints in the snow?', options: ['They flew away', 'They used the underground tunnel', 'They swept their tracks', 'They are still in the cabin'], correct: 1, feedback: 'The undisturbed snow means the only exit was the underground tunnel connecting to the supply shed.' },
+      { question: 'Which suspect is definitively ruled out because they are unaware of the tunnel?', options: ['Jack Torrance', 'Emma Frost', 'Logan Vance', 'Sarah Connor'], correct: 1, feedback: 'Emma Frost is unaware of the tunnel, meaning she could not have used it to escape the locked cabin.' },
+      { question: 'The missing weapon was likely a handgun or rifle. Which suspect is afraid of guns?', options: ['Jack Torrance', 'Emma Frost', 'Logan Vance', 'Sarah Connor'], correct: 1, feedback: 'Emma Frost is afraid of guns, further ruling her out.' },
+      { question: 'The tunnel connects directly to the supply shed. Whose alibi places them exactly at the escape point?', options: ['Jack Torrance', 'Emma Frost', 'Logan Vance', 'Sarah Connor'], correct: 3, feedback: 'Sarah Connor\'s alibi is that she was staying at the supply shed, the exact terminus of the tunnel.' },
+      { question: 'Considering the tunnel knowledge, gun ownership, and location, who is the most logical suspect?', options: ['Jack Torrance', 'Logan Vance', 'Sarah Connor', 'Emma Frost'], correct: 2, feedback: 'Sarah Connor knows about the tunnel, owns a handgun, and was stationed at the supply shed where the tunnel leads.' },
+    ],
+    verdict: 'Sarah Connor used the underground tunnel to enter the cabin, shot her ex-husband, took the weapon, and escaped back through the tunnel to the supply shed. She locked the cabin door from the inside before leaving via the tunnel, creating a locked-room mystery with no footprints in the snow.',
+    difficulty: 'hard',
+  }
 ];
+
 
 // ─── DIFFICULTY CONFIG ────────────────────────────────────────────────────────
 const DIFF = {
@@ -414,15 +377,57 @@ function updateScore(delta) {
 }
 
 // ─── PHASE TRANSITIONS ────────────────────────────────────────────────────────
-function showPhase(name) {
+function switchTab(tabId) {
+  // Hide all sections
   document.querySelectorAll('.phase-section').forEach(s => s.classList.remove('active'));
-  const el = $('phase-' + name);
+  // Deactivate all tab buttons
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  // Show target section
+  const el = $(tabId);
   if (el) el.classList.add('active');
-  phase = name;
+  
+  // Activate target tab button
+  const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+  if (btn) btn.classList.add('active');
+  
+  phase = tabId;
+}
+
+// ─── LOBBY ──────────────────────────────────────────────────────────────────────
+function showLobby() {
+  $('game-ui').style.display = 'none';
+  $('lobby-ui').style.display = 'block';
+  $('overlay').classList.remove('show');
+  stopTimer();
+
+  const grid = $('lobby-cases-grid');
+  grid.innerHTML = '';
+  
+  CASES.forEach((c, idx) => {
+    if (c.difficulty !== difficulty) return;
+    
+    const card = document.createElement('div');
+    card.className = 'lobby-case-card';
+    card.innerHTML = `
+      <div class="lobby-case-diff">${DIFF[difficulty].label}</div>
+      <div class="lobby-case-id">CASE ${c.id}</div>
+      <div class="lobby-case-title">${c.title}</div>
+      <div class="lobby-case-loc">📍 ${c.location}</div>
+      <button class="btn-start-case">START INVESTIGATION</button>
+    `;
+    card.addEventListener('click', () => {
+      startCase(idx);
+    });
+    grid.appendChild(card);
+  });
 }
 
 // ─── BUILD GAME ───────────────────────────────────────────────────────────────
 function startCase(idx) {
+  $('lobby-ui').style.display = 'none';
+  $('game-ui').style.display = 'block';
+
   caseIndex  = idx % CASES.length;
   currentCase = CASES[caseIndex];
   const cfg  = DIFF[difficulty];
@@ -447,7 +452,11 @@ function startCase(idx) {
   $('hints-left').textContent  = hintsLeft;
 
   buildScenePhase();
-  showPhase('scene');
+  buildSuspectsPhase();
+  buildCluePhase();
+  
+  startTimer();
+  switchTab('phase-scene');
   setStatus('STUDY THE CRIME SCENE', 'var(--amber)');
   $('overlay').classList.remove('show');
 }
@@ -494,9 +503,12 @@ function buildCluePhase() {
 
 function renderClue(idx) {
   if (idx >= currentCase.clues.length) {
-    transitionToAccuse();
+    $('phase-accuse').style.display = 'block';
+    buildAccusePhase();
     return;
   }
+  
+  $('phase-accuse').style.display = 'none';
 
   const clue = currentCase.clues[idx];
   $('question-number').textContent = 'CLUE ' + (idx + 1) + ' OF ' + currentCase.clues.length;
@@ -546,12 +558,12 @@ function handleAnswer(selectedIdx) {
   if (correct) {
     updateScore(cfg.correctPts);
     correctClues++;
-    addNote('correct', clue.options[selectedIdx]);
+    addNote('correct', `Q: ${clue.question}<br><span style="color: var(--green);">A: ${clue.options[selectedIdx]}</span>`);
     showToast('✓ CORRECT! +' + cfg.correctPts + ' PTS', 'success');
     setStatus('CORRECT — CLUE LOGGED', 'var(--green)');
   } else {
     updateScore(-cfg.penaltyPts);
-    addNote('wrong', clue.options[selectedIdx] + ' ✗');
+    addNote('wrong', `Q: ${clue.question}<br><span style="color: var(--crimson);">A: ${clue.options[selectedIdx]} ✗</span>`);
     showToast('✗ WRONG! -' + cfg.penaltyPts + ' PTS', 'error');
     setStatus('WRONG DEDUCTION!', 'var(--crimson)');
   }
@@ -631,36 +643,21 @@ function showResult(correct) {
 }
 
 // ─── PHASE TRANSITIONS ────────────────────────────────────────────────────────
-function transitionToScene() {
-  buildScenePhase();
-  showPhase('scene');
-  setStatus('STUDY THE CRIME SCENE', 'var(--amber)');
-}
-
-function transitionToSuspects() {
-  buildSuspectsPhase();
-  showPhase('suspects');
-  startTimer();
-  setStatus('REVIEW THE SUSPECTS', 'var(--cyan)');
-  showToast('🕵️ IDENTIFY THE KILLER', 'info');
-}
-
-function transitionToClues() {
-  buildCluePhase();
-  showPhase('clues');
-  setStatus('ANALYSE THE CLUES', 'var(--cyan)');
-}
-
 function transitionToAccuse() {
+  $('phase-accuse').style.display = 'block';
   buildAccusePhase();
-  showPhase('accuse');
   setStatus('WHO DID IT? MAKE YOUR ACCUSATION', 'var(--crimson)');
   showToast('⚠ FINAL DECISION — CHOOSE WISELY', 'error');
+  
+  // Auto-scroll to accuse section
+  setTimeout(() => {
+    $('phase-accuse').scrollIntoView({ behavior: 'smooth' });
+  }, 100);
 }
 
 // ─── HINT LOGIC ───────────────────────────────────────────────────────────────
 function useHint() {
-  if (hintsLeft <= 0 || phase !== 'clues') return;
+  if (hintsLeft <= 0 || phase !== 'phase-clues') return;
   const clue = currentCase.clues[clueIndex];
   if (!clue) return;
 
@@ -692,7 +689,7 @@ function switchDiff(d) {
   document.querySelectorAll('.setup-btn[data-diff]').forEach(b => {
     b.classList.toggle('active', b.dataset.diff === d);
   });
-  startCase(caseIndex);
+  showLobby();
 }
 
 // ─── INIT & EVENT WIRING ──────────────────────────────────────────────────────
@@ -700,8 +697,11 @@ document.querySelectorAll('.setup-btn[data-diff]').forEach(b =>
   b.addEventListener('click', () => switchDiff(b.dataset.diff))
 );
 
-$('btn-scene-next').addEventListener('click', () => transitionToSuspects());
-$('btn-suspects-next').addEventListener('click', () => transitionToClues());
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    switchTab(btn.dataset.tab);
+  });
+});
 $('btn-next-clue').addEventListener('click', () => {
   if (clueIndex >= currentCase.clues.length) {
     transitionToAccuse();
@@ -716,9 +716,9 @@ $('btn-confirm-accuse').addEventListener('click', () => handleAccusation());
 $('btn-hint').addEventListener('click', () => useHint());
 
 $('btn-restart').addEventListener('click', () => startCase(caseIndex));
-$('btn-newcase').addEventListener('click', () => startCase(caseIndex + 1));
+$('btn-leave-case').addEventListener('click', () => showLobby());
 $('res-replay').addEventListener('click', () => startCase(caseIndex));
-$('res-newcase').addEventListener('click', () => startCase(caseIndex + 1));
+$('res-newcase').addEventListener('click', () => showLobby());
 
 // How-to-play accordion
 $('htp-toggle').addEventListener('click', () => {
@@ -750,6 +750,5 @@ function saveStats() {
     localStorage.setItem('detective_stats', JSON.stringify(stats));
   }
 }
-// Shuffle cases so returning players get variety
-const startIdx = Math.floor(Math.random() * CASES.length);
-startCase(startIdx);
+// Initialize lobby
+showLobby();
