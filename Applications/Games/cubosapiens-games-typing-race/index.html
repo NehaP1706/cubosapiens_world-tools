@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Race Game</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="day-mode">
+
+  <!-- Header & Controls -->
+  <header>
+    <div class="logo">🏁 Typing Race 🏁</div>
+    <div class="controls">
+      <button id="btn-theme">🌙 Night Mode</button>
+      <button id="btn-help">❓ How to Play</button>
+    </div>
+  </header>
+
+  <!-- Setup Screen -->
+  <div id="setup-screen" class="screen active">
+    <h2>Select Difficulty</h2>
+    <div class="difficulty-buttons">
+      <button class="btn-diff" data-level="easy">Easy</button>
+      <button class="btn-diff" data-level="medium">Medium</button>
+      <button class="btn-diff" data-level="hard">Hard</button>
+    </div>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen">
+    <div class="hud">
+      <div class="stat-box">WPM: <span id="wpm">0</span></div>
+      <div class="stat-box">Accuracy: <span id="accuracy">100</span>%</div>
+      <div class="stat-box">Time: <span id="time">0</span>s</div>
+      <button id="btn-pause">Pause</button>
+      <button id="btn-restart">Restart</button>
+    </div>
+
+    <div class="track-container">
+      <div class="track">
+        <div class="finish-line"></div>
+        <div id="car" class="car">🏎️</div>
+      </div>
+    </div>
+
+    <div class="text-container">
+      <input type="text" id="mobile-input" style="position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+      <div id="text-display">Loading text...</div>
+    </div>
+  </div>
+
+  <!-- Results Screen -->
+  <div id="results-screen" class="screen">
+    <h2>Race Finished! 🏆</h2>
+    <div class="results-stats">
+      <p>Final WPM: <span id="final-wpm">0</span></p>
+      <p>Final Accuracy: <span id="final-accuracy">0</span>%</p>
+      <p>Time: <span id="final-time">0</span>s</p>
+    </div>
+    <button id="btn-play-again">Play Again</button>
+  </div>
+
+  <!-- How to Play Modal -->
+  <div id="help-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>How to Play</h2>
+      <ul>
+        <li>Select a difficulty to start the race.</li>
+        <li>Type the text as fast and accurately as you can.</li>
+        <li>Every correct keystroke accelerates your car.</li>
+        <li>Every mistake slows your car down!</li>
+        <li><strong>No Backspace Allowed:</strong> If you make a mistake, you must type the correct character to continue.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pause Overlay -->
+  <div id="pause-overlay" class="modal">
+    <div class="modal-content">
+      <h2>Game Paused</h2>
+      <button id="btn-resume">Resume</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
