@@ -215,11 +215,22 @@ async function main()
             isLive: true,
             isFeatured: false,
             order: 15
+      },
+      {
+            name: "HTML Formatter",
+            slug: "html-formatter",
+            description: "Format beautify and validate HTML instantly",
+            category: "text",
+            icon: "html-formatter.png",
+            url: "https://htmlformat.cubosapiens.world",
+            isLive: false,
+            isFeatured: false,
+            order: 16
       }
 ]
   })
 
-  console.log("✅ 19 tools seeded")
+  console.log("✅ 20 tools seeded")
 
   await prisma.game.createMany({
     skipDuplicates: true,
