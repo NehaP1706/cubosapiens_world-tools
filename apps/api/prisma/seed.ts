@@ -390,6 +390,26 @@ async function main()
             order: 6
       },
       {
+            name: "Hacker Simulator",
+            slug: "hacker-simulator",
+            description: "Retro terminal hacker simulator with encryption puzzles, hardware upgrades, and cybersecurity missions.",
+            genre: "strategy",
+            icon: "💻",
+            url: "https://hacker-simulator.cubosapiens.world",
+            isLive: true,
+            isFeatured: true,
+            order: 7
+      },
+      {
+            name: "Trading Empire",
+            slug: "trading-empire",
+            description: "Build your financial empire — trade goods, buy properties, upgrade your ship, and dominate the cosmic market.",
+            genre: "strategy",
+            icon: "trading-empire.png",
+            url: "https://trading-empire.cubosapiens.world",
+            isLive: true,
+            isFeatured: true,},
+      {
             name: "Connect Four",
             slug: "connect-four",
             description: "Drop tokens, connect 4 in a row to win",
@@ -403,7 +423,7 @@ async function main()
 ]
   })
 
-  console.log("✅ 13 games seeded")
+  console.log("✅ 15 games seeded")
 }
 
 main()
