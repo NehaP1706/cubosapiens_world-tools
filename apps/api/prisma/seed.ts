@@ -419,11 +419,22 @@ async function main()
             isLive: true,
             isFeatured: false,
             order: 7
+      },
+      {
+            name: "Hacker Simulator",
+            slug: "hacker-simulator",
+            description: "An immersive browser-based terminal hacker simulator game with realistic hacking missions, upgrades, and retro aesthetics.",
+            genre: "strategy",
+            icon: "💻",
+            url: "https://hacker-simulator.cubosapiens.world",
+            isLive: true,
+            isFeatured: true,
+            order: 8
       }
 ]
   })
 
-  console.log("✅ 15 games seeded")
+  console.log("✅ 17 games seeded")
 }
 
 main()
