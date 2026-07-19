@@ -26,6 +26,37 @@
       <button class="btn-diff" data-level="medium">Medium</button>
       <button class="btn-diff" data-level="hard">Hard</button>
     </div>
+
+    <div class="car-selection">
+      <h3>Choose Your Supercar</h3>
+      <div class="car-options">
+        <button class="car-opt active" data-car="🏎️">🏎️ F1 Red</button>
+        <button class="car-opt" data-car="🏎️" style="filter: hue-rotate(120deg);">🏎️ F1 Green</button>
+        <button class="car-opt" data-car="🏎️" style="filter: hue-rotate(240deg);">🏎️ F1 Purple</button>
+        <button class="car-opt" data-car="🏍️">🏍️ Superbike</button>
+      </div>
+    </div>
+
+    <div class="records-dashboard">
+      <h3>⏱️ Last Run Scores to Beat ⏱️</h3>
+      <div class="record-cards">
+        <div class="record-card" data-diff="easy">
+          <div class="card-title">EASY</div>
+          <div class="card-value"><span class="wpm-val">-</span> WPM</div>
+          <div class="card-sub"><span class="time-val">-</span>s | <span class="acc-val">-</span>% acc</div>
+        </div>
+        <div class="record-card" data-diff="medium">
+          <div class="card-title">MEDIUM</div>
+          <div class="card-value"><span class="wpm-val">-</span> WPM</div>
+          <div class="card-sub"><span class="time-val">-</span>s | <span class="acc-val">-</span>% acc</div>
+        </div>
+        <div class="record-card" data-diff="hard">
+          <div class="card-title">HARD</div>
+          <div class="card-value"><span class="wpm-val">-</span> WPM</div>
+          <div class="card-sub"><span class="time-val">-</span>s | <span class="acc-val">-</span>% acc</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Game Screen -->
@@ -34,14 +65,22 @@
       <div class="stat-box">WPM: <span id="wpm">0</span></div>
       <div class="stat-box">Accuracy: <span id="accuracy">100</span>%</div>
       <div class="stat-box">Time: <span id="time">0</span>s</div>
+      <div class="stat-box">Target: <span id="target-wpm">-</span> WPM</div>
       <button id="btn-pause">Pause</button>
       <button id="btn-restart">Restart</button>
     </div>
 
     <div class="track-container">
-      <div class="track">
+      <div class="tracks-wrapper">
+        <div class="track lane-player">
+          <span class="lane-tag">YOU</span>
+          <div id="car" class="car">🏎️</div>
+        </div>
+        <div class="track lane-ghost">
+          <span class="lane-tag" id="ghost-tag">GHOST</span>
+          <div id="ghost-car" class="car ghost-car">🏎️</div>
+        </div>
         <div class="finish-line"></div>
-        <div id="car" class="car">🏎️</div>
       </div>
     </div>
 
@@ -49,11 +88,22 @@
       <input type="text" id="mobile-input" style="position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
       <div id="text-display">Loading text...</div>
     </div>
+
+    <!-- Countdown Overlay -->
+    <div id="countdown-overlay" class="countdown-overlay">
+      <div class="countdown-lights">
+        <div class="light" id="light-1"></div>
+        <div class="light" id="light-2"></div>
+        <div class="light" id="light-3"></div>
+      </div>
+      <div id="countdown-number" class="countdown-number">3</div>
+    </div>
   </div>
 
   <!-- Results Screen -->
   <div id="results-screen" class="screen">
     <h2>Race Finished! 🏆</h2>
+    <div id="beat-message" class="beat-message"></div>
     <div class="results-stats">
       <p>Final WPM: <span id="final-wpm">0</span></p>
       <p>Final Accuracy: <span id="final-accuracy">0</span>%</p>
