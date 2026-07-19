@@ -304,5 +304,33 @@
         "For all intents and purposes, the highly-anticipated, blockbuster movie drastically altered the historical artifact.",
         "Believe it or not, a well-known (but controversial) author suddenly disrupted the shocking allegations.",
         "Without a shadow of a doubt, the highly-anticipated, blockbuster movie expertly analyzed the historical artifact."
-    ]
+    ],
+    "paragraph": [
+        "The old lighthouse keeper climbed the spiral stairs every evening, just as he had for thirty years. The sea below churned restlessly, throwing salt spray against the rocks. He lit the lamp, watched it catch, and settled into his chair to wait for the ships that rarely came anymore.",
+        "In the heart of the bustling city, a small bakery survived against every prediction. Its owner, an elderly woman with flour-dusted hands, greeted every customer by name. Rain or shine, the smell of fresh bread drifted down the block, pulling in strangers who left as regulars.",
+        "The scientists had spent years preparing for the launch, checking every bolt and wire twice. As the countdown reached zero, the rocket trembled, roared, and lifted off the pad in a wall of fire. For a moment, the entire team forgot to breathe, watching their work become a streak of light.",
+        "Deep within the ancient forest, moss crept over fallen logs and sunlight filtered through a canopy of green. A narrow trail wound between towering trees, marked only by faded ribbons tied to branches. Hikers said the woods felt older than time itself, patient and quietly watching.",
+        "The chess tournament had come down to a single match, and the room was silent except for the ticking clock. Both players stared at the board, calculating moves several turns ahead. When the final piece finally fell, the crowd erupted, releasing tension that had built for hours.",
+        "Every morning before dawn, the fishermen pushed their boats into the cold water, engines humming against the quiet. They knew the tides better than their own reflections, reading the sky for signs of storms. By midday, the harbor filled again with nets, chatter, and the smell of the sea.",
+        "The museum's newest exhibit told the story of a civilization lost to time, pieced together from shards of pottery and fragments of stone. Visitors moved slowly through the dim halls, reading placards under soft lighting. Somewhere in the silence, history felt close enough to touch.",
+        "A sudden storm rolled over the mountains, turning the afternoon sky a deep, bruised purple. Hikers hurried down the trail, boots slipping on wet stone, laughter mixing with nervous energy. By the time they reached shelter, thunder cracked overhead and rain fell in relentless sheets."
+    ],
+    "ai": {
+        "easy": {
+            "wpm": 30,
+            "profile": [0.85, 1.05, 0.95, 1.1, 0.9, 1.0, 1.05, 0.95, 1.1, 0.9, 1.0, 1.05]
+        },
+        "medium": {
+            "wpm": 50,
+            "profile": [0.8, 1.1, 0.9, 1.15, 0.85, 1.05, 0.95, 1.1, 0.9, 1.0, 1.1, 0.95]
+        },
+        "hard": {
+            "wpm": 68,
+            "profile": [0.75, 1.15, 0.85, 1.2, 0.8, 1.1, 0.9, 1.15, 0.85, 1.05, 0.95, 1.1]
+        },
+        "paragraph": {
+            "wpm": 55,
+            "profile": [0.8, 1.05, 0.9, 1.1, 0.85, 1.0, 0.95, 1.1, 0.85, 1.05, 0.9, 1.0]
+        }
+    }
 }

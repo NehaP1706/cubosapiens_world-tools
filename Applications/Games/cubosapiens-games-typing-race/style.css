@@ -187,6 +187,7 @@ button:focus-visible {
 
 .difficulty-buttons .btn-diff:nth-child(2) { transform: rotate(1.5deg); }
 .difficulty-buttons .btn-diff:nth-child(3) { transform: rotate(-1deg); }
+.difficulty-buttons .btn-diff:nth-child(4) { transform: rotate(2deg); }
 
 .btn-diff::before {
   content: "🏎️";
@@ -205,9 +206,10 @@ button:focus-visible {
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
 }
 
-.btn-diff[data-level="easy"]   { border-color: var(--primary); }
-.btn-diff[data-level="medium"] { border-color: var(--racing-yellow); }
-.btn-diff[data-level="hard"]   { border-color: var(--racing-red); }
+.btn-diff[data-level="easy"]      { border-color: var(--primary); }
+.btn-diff[data-level="medium"]    { border-color: var(--racing-yellow); }
+.btn-diff[data-level="hard"]      { border-color: var(--racing-red); }
+.btn-diff[data-level="paragraph"] { border-color: var(--accent); }
 
 .hud {
   display: flex;
@@ -615,6 +617,50 @@ button:focus-visible {
   .text-container {
     font-size: 16px;
   }
+}
+
+/* Race Mode Selection Styling */
+.mode-selection {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+.mode-selection h3 {
+  font-family: var(--font-game);
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.9;
+  margin-bottom: 15px;
+}
+.mode-options {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.mode-opt {
+  padding: 10px 18px;
+  font-size: 15px;
+  background: var(--asphalt-2);
+  border: 2px solid transparent;
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: all 0.15s ease;
+}
+.mode-opt:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+.mode-opt.active {
+  background: var(--asphalt);
+  border-color: var(--nitro-blue);
+  color: var(--nitro-blue);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
 }
 
 /* Car Selection Styling */

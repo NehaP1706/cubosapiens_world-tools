@@ -1,5 +1,6 @@
 let db = null;
 let currentDifficulty = 'easy';
+let raceMode = 'solo'; // 'solo' | 'ai'
 let currentText = '';
 let currentIndex = 0;
 let mistakes = 0;
@@ -11,6 +12,8 @@ let elapsedTime = 0;
 let isPlaying = false;
 let isPaused = false;
 let isCountdown = false;
+let activeGhostWpm = null;
+let activeGhostLabel = 'GHOST';
 
 // Selected car state
 let selectedCarEmoji = '🏎️';
@@ -53,6 +56,16 @@ carOpts.forEach(opt => {
   });
 });
 
+// Race mode configuration (Solo Race vs Player VS AI)
+const modeOpts = document.querySelectorAll('.mode-opt');
+modeOpts.forEach(opt => {
+  opt.addEventListener('click', () => {
+    modeOpts.forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+    raceMode = opt.dataset.mode;
+  });
+});
+
 async function fetchDb() {
   try {
     const res = await fetch('db.json');
@@ -62,7 +75,14 @@ async function fetchDb() {
     db = {
       easy: ["the quick fox jumps", "a cat runs fast"],
       medium: ["The quick brown fox jumps.", "A fast car zoomed by."],
-      hard: ["\"Stop!\" she yelled, quickly."]
+      hard: ["\"Stop!\" she yelled, quickly."],
+      paragraph: ["The quick brown fox jumps over the lazy dog. It happens near the old barn every morning. Nobody quite knows why, but the routine never changes."],
+      ai: {
+        easy: { wpm: 30, profile: [0.9, 1.1, 0.95, 1.05] },
+        medium: { wpm: 50, profile: [0.85, 1.1, 0.9, 1.15] },
+        hard: { wpm: 68, profile: [0.8, 1.15, 0.85, 1.2] },
+        paragraph: { wpm: 55, profile: [0.85, 1.05, 0.9, 1.1] }
+      }
     };
   }
   // Initialize records dashboard after db is ready
@@ -103,7 +123,7 @@ btnDiffs.forEach(btn => {
 
 // Update Records Board from localStorage
 function updateRecordsDashboard() {
-  ['easy', 'medium', 'hard'].forEach(diff => {
+  ['easy', 'medium', 'hard', 'paragraph'].forEach(diff => {
     const wpmVal = localStorage.getItem(`typing_race_last_wpm_${diff}`);
     const timeVal = localStorage.getItem(`typing_race_last_time_${diff}`);
     const accVal = localStorage.getItem(`typing_race_last_accuracy_${diff}`);
@@ -197,39 +217,55 @@ function startGame() {
   clearInterval(timerInterval);
   clearInterval(ghostInterval);
   
-  // Load target/previous score to beat
+  // Load target/previous score to beat, or set up the AI opponent
   let ghostWpm = 25;
+  let aiProfile = null;
   const lastWpmKey = `typing_race_last_wpm_${currentDifficulty}`;
   const savedLastWpm = localStorage.getItem(lastWpmKey);
-  if (savedLastWpm) {
+
+  if (raceMode === 'ai') {
+    const fallbackWpm = { easy: 30, medium: 50, hard: 68, paragraph: 55 }[currentDifficulty] || 40;
+    const aiData = (db.ai && db.ai[currentDifficulty]) || { wpm: fallbackWpm, profile: [0.9, 1.1, 0.95, 1.05] };
+    ghostWpm = aiData.wpm;
+    aiProfile = aiData.profile;
+    activeGhostLabel = 'AI OPPONENT';
+    document.getElementById('target-wpm').textContent = `${ghostWpm} (AI)`;
+    document.getElementById('ghost-tag').textContent = `AI OPPONENT (${ghostWpm} WPM)`;
+  } else if (savedLastWpm) {
     ghostWpm = parseInt(savedLastWpm);
+    activeGhostLabel = 'GHOST';
     document.getElementById('target-wpm').textContent = savedLastWpm;
     document.getElementById('ghost-tag').textContent = `LAST RUN (${savedLastWpm} WPM)`;
   } else {
     if (currentDifficulty === 'easy') ghostWpm = 25;
     else if (currentDifficulty === 'medium') ghostWpm = 45;
     else if (currentDifficulty === 'hard') ghostWpm = 65;
+    else if (currentDifficulty === 'paragraph') ghostWpm = 55;
+    activeGhostLabel = 'PACE CAR';
     document.getElementById('target-wpm').textContent = `${ghostWpm} (Pace)`;
     document.getElementById('ghost-tag').textContent = `PACE CAR (${ghostWpm} WPM)`;
   }
+  activeGhostWpm = ghostWpm;
 
   // Start Traffic light countdown
   runCountdown(() => {
     isPlaying = true;
     startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
-    
-    // Ghost competitor path duration
+
+    // Ghost/AI competitor path duration
     const totalWords = currentText.length / 5;
     const targetDurationMs = (totalWords / ghostWpm) * 60 * 1000;
-    
+
     ghostInterval = setInterval(() => {
       if (isPaused || !isPlaying) return;
       const elapsedMs = Date.now() - startTime;
-      const ghostProgress = Math.min((elapsedMs / targetDurationMs) * 90, 90);
+      const ghostProgress = aiProfile
+        ? computeAiProgress(elapsedMs, targetDurationMs, aiProfile)
+        : Math.min((elapsedMs / targetDurationMs) * 90, 90);
       ghostCar.style.left = `${ghostProgress}%`;
     }, 100);
-    
+
     if (track) track.classList.remove('paused');
     car.classList.remove('engine-start');
     void car.offsetWidth; 
@@ -237,6 +273,33 @@ function startGame() {
     
     mobileInput.focus();
   });
+}
+
+// Drives the AI opponent's progress using a preloaded pacing curve so it
+// speeds up and slows down like a real racer instead of moving at a flat rate.
+function computeAiProgress(elapsedMs, targetDurationMs, profile) {
+  const n = profile.length;
+  const avg = profile.reduce((a, b) => a + b, 0) / n;
+  const chunkMs = targetDurationMs / n;
+  const chunkPercent = 90 / n;
+
+  let progress = 0;
+  let remaining = elapsedMs;
+
+  for (let i = 0; i < n; i++) {
+    const weight = profile[i] / avg;
+    const thisChunkPercent = chunkPercent * weight;
+    if (remaining >= chunkMs) {
+      progress += thisChunkPercent;
+      remaining -= chunkMs;
+    } else {
+      progress += thisChunkPercent * (remaining / chunkMs);
+      remaining = 0;
+      break;
+    }
+  }
+
+  return Math.min(progress, 90);
 }
 
 function renderText() {
@@ -267,7 +330,8 @@ function updateStats() {
   accDisplay.textContent = accuracy;
   
   // Real-time speed-activated Nitro visual effects!
-  const nitroThreshold = currentDifficulty === 'easy' ? 45 : (currentDifficulty === 'medium' ? 60 : 75);
+  const nitroThresholds = { easy: 45, medium: 60, hard: 75, paragraph: 70 };
+  const nitroThreshold = nitroThresholds[currentDifficulty] || 60;
   if (wpm >= nitroThreshold) {
     car.classList.add('nitro');
   } else {
@@ -288,19 +352,17 @@ function finishGame() {
   finalAcc.textContent = finalAccVal;
   finalTime.textContent = finalTimeVal;
   
-  // Load target to see if we beat it
-  const lastWpmKey = `typing_race_last_wpm_${currentDifficulty}`;
-  const savedLastWpm = localStorage.getItem(lastWpmKey);
-  const targetWpm = savedLastWpm ? parseInt(savedLastWpm) : null;
-  
+  // Compare against whichever opponent was actually raced this run (AI, last run, or pace car)
+  const targetWpm = activeGhostWpm;
+
   const beatMsgEl = document.getElementById('beat-message');
   if (targetWpm) {
     if (finalWpmVal > targetWpm) {
-      beatMsgEl.innerHTML = `<span style="color: var(--primary);">👑 TARGET BEATEN BY ${finalWpmVal - targetWpm} WPM! NEW RECORD! 👑</span>`;
+      beatMsgEl.innerHTML = `<span style="color: var(--primary);">👑 ${activeGhostLabel} BEATEN BY ${finalWpmVal - targetWpm} WPM! NEW RECORD! 👑</span>`;
     } else if (finalWpmVal < targetWpm) {
-      beatMsgEl.innerHTML = `<span style="color: var(--error);">GHOST BEAT YOU BY ${targetWpm - finalWpmVal} WPM. GO FAST! ⚡</span>`;
+      beatMsgEl.innerHTML = `<span style="color: var(--error);">${activeGhostLabel} BEAT YOU BY ${targetWpm - finalWpmVal} WPM. GO FAST! ⚡</span>`;
     } else {
-      beatMsgEl.innerHTML = `<span style="color: var(--racing-yellow);">YOU TIED WITH THE GHOST RIDER!</span>`;
+      beatMsgEl.innerHTML = `<span style="color: var(--racing-yellow);">YOU TIED WITH THE ${activeGhostLabel}!</span>`;
     }
   } else {
     beatMsgEl.innerHTML = `<span style="color: var(--primary);">FIRST RUN COMPLETE! SCORE RECORDED!</span>`;

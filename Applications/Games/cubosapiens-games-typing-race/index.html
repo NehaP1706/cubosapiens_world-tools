@@ -20,11 +20,20 @@
 
   <!-- Setup Screen -->
   <div id="setup-screen" class="screen active">
+    <div class="mode-selection">
+      <h3>Race Mode</h3>
+      <div class="mode-options">
+        <button class="mode-opt active" data-mode="solo">🏁 Solo Race</button>
+        <button class="mode-opt" data-mode="ai">🤖 Player VS AI</button>
+      </div>
+    </div>
+
     <h2>Select Difficulty</h2>
     <div class="difficulty-buttons">
       <button class="btn-diff" data-level="easy">Easy</button>
       <button class="btn-diff" data-level="medium">Medium</button>
       <button class="btn-diff" data-level="hard">Hard</button>
+      <button class="btn-diff" data-level="paragraph">Paragraph</button>
     </div>
 
     <div class="car-selection">
@@ -52,6 +61,11 @@
         </div>
         <div class="record-card" data-diff="hard">
           <div class="card-title">HARD</div>
+          <div class="card-value"><span class="wpm-val">-</span> WPM</div>
+          <div class="card-sub"><span class="time-val">-</span>s | <span class="acc-val">-</span>% acc</div>
+        </div>
+        <div class="record-card" data-diff="paragraph">
+          <div class="card-title">PARAGRAPH</div>
           <div class="card-value"><span class="wpm-val">-</span> WPM</div>
           <div class="card-sub"><span class="time-val">-</span>s | <span class="acc-val">-</span>% acc</div>
         </div>
@@ -123,6 +137,8 @@
         <li>Every correct keystroke accelerates your car.</li>
         <li>Every mistake slows your car down!</li>
         <li><strong>No Backspace Allowed:</strong> If you make a mistake, you must type the correct character to continue.</li>
+        <li><strong>Solo Race:</strong> Race against your last run, or a preset pace car if it's your first time.</li>
+        <li><strong>Player VS AI:</strong> Race against a preloaded AI opponent with realistic, human-like pacing.</li>
       </ul>
     </div>
   </div>
